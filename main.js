@@ -24,7 +24,7 @@ const startServer = async () => {
     res.send("Hola mundo!💖");
   });
 
-  app.use("/api", taskRouter);
+  app.use("/tasks", taskRouter);
 
   app.listen(PORT, async () => {
     await taskEntity();

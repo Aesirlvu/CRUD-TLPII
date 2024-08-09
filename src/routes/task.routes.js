@@ -6,14 +6,16 @@ import {
   updateTask,
   deleteTask,
 } from "../controller/task.controller.js";
+import { validationTasks } from "../validation/validations.js";
+import { applyValidations } from "../middlewares/apply.validation.js";
 
 // Creamos un router para las rutas de las tareas.
 const taskRouter = Router();
 
-taskRouter.get("/tasks", getTasks);
-taskRouter.get("/task/:id", getOneTask);
-taskRouter.post("/task", createTask);
-taskRouter.put("/task/:id", updateTask);
-taskRouter.delete("/task/:id", deleteTask);
+taskRouter.get("/", getTasks);
+taskRouter.get("/:id", getOneTask);
+taskRouter.post("/", validationTasks, applyValidations, createTask);
+taskRouter.put("/:id", updateTask);
+taskRouter.delete("/:id", deleteTask);
 
 export default taskRouter;
