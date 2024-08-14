@@ -1,22 +1,19 @@
+import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import cors from "cors";
-import "dotenv/config";
-import taskRouter from "./src/routes/task.routes.js";
 import { connectDB } from "./src/config/db.js";
+import { environment } from "./src/config/environment.js";
 import { taskEntity } from "./src/models/task.model.js";
+import taskRouter from "./src/routes/task.routes.js";
 
-// Se declaran las variables de entorno
-const URL = process.env.DB_URL;
-const PORT = process.env.DB_PORT || 4000;
+const URL = environment.server.host;
+const PORT = environment.server.port;
 
-// Se inicializa la aplicación de express y demas middlewares
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-// la función startServer se encarga de conectar la base de datos y levantar el servidor
 const startServer = async () => {
   await connectDB();
 
