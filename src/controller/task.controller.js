@@ -8,11 +8,11 @@ export const getTasks = async (req, res) => {
     console.log(result);
 
     if (!result.length) {
-      return res.status(404).send("No hay tareas registradas.");
+      return res.status(404).json("No hay tareas registradas.");
     }
     return res.status(200).json(result);
   } catch (error) {
-    res.status(400).send("Error, no se pudo obtener las tareas.");
+    res.status(400).json("Error, no se pudo obtener las tareas.");
   }
 };
 
@@ -29,7 +29,7 @@ export const getOneTask = async (req, res) => {
     console.log(result);
 
     if (!result.length) {
-      return res.status(404).send("No hay tarea.");
+      return res.status(404).json("No hay tarea.");
     }
     return res.status(200).json(result);
   } catch (error) {
@@ -64,7 +64,7 @@ export const createTask = async (req, res) => {
     ]);
 
     if (checkTask.length) {
-      return res.status(400).send("La tarea ya existe");
+      return res.status(400).json("La tarea ya existe");
     }
 
     const result = await connection.query(query, [title, description]);
@@ -100,9 +100,7 @@ export const updateTask = async (req, res) => {
     const [checkTask] = await connection.query(query, [id]);
 
     if (!checkTask.length) {
-      return res
-        .status(404)
-        .send("No se puede actualizar, no se encuentra el registro.");
+      return res.status(404).json("No se puede actualizar.");
     }
 
     const result = await connection.query(updateQuery, [
@@ -136,9 +134,7 @@ export const deleteTask = async (req, res) => {
     const [checkTask] = await connection.query(querySelect, [id]);
 
     if (!checkTask.length) {
-      return res
-        .status(404)
-        .send("No se puede eliminar, no se encuentra el registro.");
+      return res.status(400).json("No se puede eliminar");
     }
 
     const result = await connection.query(queryDelete, [id]);
